@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="cityfields" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="cityfields" version="1.1">
+
+	<object class="cfCity" table="cf_cities" extends="xPDOSimpleObject">
+		<field key="id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" generated="native" />
+		<field key="key" dbtype="varchar" precision="30" phptype="string" null="false" />
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="active" dbtype="tinyint" precision="1" phptype="boolean" null="false" />
+		
+		<composite alias="Fields" class="cfFields" local="id" foreign="city_id" cardinality="many" owner="local" />
+	</object>
+
+	<object class="cfField" table="cf_fields" extends="xPDOSimpleObject">
+		<field key="id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" index="pk" generated="native" />
+		<field key="city_id" dbtype="int" precision="10" attributes="unsigned" phptype="integer" null="false" />
+		<field key="placeholder" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="value" dbtype="tinytext" phptype="string" null="false" />
+		
+		<aggregate alias="City" class="cfCity" local="city_id" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+</model>
